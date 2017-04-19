@@ -63,6 +63,15 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.json-schema.json-schema">
+            function <span class="apidocSignatureSpan"></span>json-schema
+            <span class="apidocSignatureSpan">(instance, schema)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.json-schema._validate">
             function <span class="apidocSignatureSpan">json-schema.</span>_validate
             <span class="apidocSignatureSpan">(instance, schema, options)</span>
@@ -139,10 +148,83 @@
 
     </ol></li>
 
+    <li class="apidocModuleLi"><a href="#apidoc.module.json-schema.validate">module json-schema.validate</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.json-schema.validate.validate">
+            function <span class="apidocSignatureSpan">json-schema.</span>validate
+            <span class="apidocSignatureSpan">(instance, schema)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.json-schema.validate._validate">
+            function <span class="apidocSignatureSpan">json-schema.validate.</span>_validate
+            <span class="apidocSignatureSpan">(instance, schema, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.json-schema.validate.checkPropertyChange">
+            function <span class="apidocSignatureSpan">json-schema.validate.</span>checkPropertyChange
+            <span class="apidocSignatureSpan">(value, schema, property)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.json-schema.validate.mustBeValid">
+            function <span class="apidocSignatureSpan">json-schema.validate.</span>mustBeValid
+            <span class="apidocSignatureSpan">(result)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">json-schema.validate.</span>Integer</span>
+
+        </li>
+
+    </ol></li>
+
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.json-schema" id="apidoc.module.json-schema">module json-schema</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.json-schema.json-schema" id="apidoc.element.json-schema.json-schema">
+        function <span class="apidocSignatureSpan"></span>json-schema
+        <span class="apidocSignatureSpan">(instance, schema)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function validate(instance, schema) {
+		// Summary:
+		//  	To use the validator call JSONSchema.validate with an instance object and an optional schema object.
+		// 		If a schema is provided, it will be used to validate. If the instance object refers to a schema (self-validating),
+		// 		that schema will be used to validate and the schema parameter is not necessary (if both exist,
+		// 		both validations will occur).
+		// 		The validate method will return an object with two properties:
+		// 			valid: A boolean indicating if the instance is valid by the schema
+		// 			errors: An array of validation errors. If there are no errors, then an
+		// 					empty list will be returned. A validation error will have two properties:
+		// 						property: which indicates which property had the error
+		// 						message: which indicates what the error was
+		//
+		return validate(instance, schema, {changing: false});//, coerce: false, existingOnly: false});
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 
     <h2>
@@ -423,6 +505,203 @@ exports.substitute = function(linkTemplate, instance){
 				// the value is an array, it should produce a URI like /Table/(4,5,8) and store.get() should handle that as an array of values
 ...</pre></li>
     </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.json-schema.validate" id="apidoc.module.json-schema.validate">module json-schema.validate</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.json-schema.validate.validate" id="apidoc.element.json-schema.validate.validate">
+        function <span class="apidocSignatureSpan">json-schema.</span>validate
+        <span class="apidocSignatureSpan">(instance, schema)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function validate(instance, schema) {
+		// Summary:
+		//  	To use the validator call JSONSchema.validate with an instance object and an optional schema object.
+		// 		If a schema is provided, it will be used to validate. If the instance object refers to a schema (self-validating),
+		// 		that schema will be used to validate and the schema parameter is not necessary (if both exist,
+		// 		both validations will occur).
+		// 		The validate method will return an object with two properties:
+		// 			valid: A boolean indicating if the instance is valid by the schema
+		// 			errors: An array of validation errors. If there are no errors, then an
+		// 					empty list will be returned. A validation error will have two properties:
+		// 						property: which indicates which property had the error
+		// 						message: which indicates what the error was
+		//
+		return validate(instance, schema, {changing: false});//, coerce: false, existingOnly: false});
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.json-schema.validate._validate" id="apidoc.element.json-schema.validate._validate">
+        function <span class="apidocSignatureSpan">json-schema.validate.</span>_validate
+        <span class="apidocSignatureSpan">(instance, schema, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">_validate = function (instance, schema, options) {
+
+	if (!options) options = {};
+	var _changing = options.changing;
+
+	function getType(schema){
+		return schema.type || (primitiveConstructors[schema.name] == schema &#x26;&#x26; schema.name.toLowerCase());
+	}
+	var errors = [];
+	// validate a value against a property definition
+	function checkProp(value, schema, path,i){
+
+		var l;
+		path += path ? typeof i == &#x27;number&#x27; ? &#x27;[&#x27; + i + &#x27;]&#x27; : typeof i == &#x27;undefined&#x27; ? &#x27;&#x27; : &#x27;.&#x27; + i : i;
+		function addError(message){
+			errors.push({property:path,message:message});
+		}
+
+		if((typeof schema != &#x27;object&#x27; || schema instanceof Array) &#x26;&#x26; (path || typeof schema != &#x27;function&#x27;) &#x26;&#x26; !(schema &#x26;&#x26; getType(schema
+))){
+			if(typeof schema == &#x27;function&#x27;){
+				if(!(value instanceof schema)){
+					addError(&#x22;is not an instance of the class/constructor &#x22; + schema.name);
+				}
+			}else if(schema){
+				addError(&#x22;Invalid schema/property definition &#x22; + schema);
+			}
+			return null;
+		}
+		if(_changing &#x26;&#x26; schema.readonly){
+			addError(&#x22;is a readonly field, it can not be changed&#x22;);
+		}
+		if(schema[&#x27;extends&#x27;]){ // if it extends another schema, it must pass that schema as well
+			checkProp(value,schema[&#x27;extends&#x27;],path,i);
+		}
+		// validate a value against a type definition
+		function checkType(type,value){
+			if(type){
+				if(typeof type == &#x27;string&#x27; &#x26;&#x26; type != &#x27;any&#x27; &#x26;&#x26;
+						(type == &#x27;null&#x27; ? value !== null : typeof value != type) &#x26;&#x26;
+						!(value instanceof Array &#x26;&#x26; type == &#x27;array&#x27;) &#x26;&#x26;
+						!(value instanceof Date &#x26;&#x26; type == &#x27;date&#x27;) &#x26;&#x26;
+						!(type == &#x27;integer&#x27; &#x26;&#x26; value%1===0)){
+					return [{property:path,message:(typeof value) + &#x22; value found, but a &#x22; + type + &#x22; is required&#x22;}];
+				}
+				if(type instanceof Array){
+					var unionErrors=[];
+					for(var j = 0; j &#x3c; type.length; j++){ // a union type
+						if(!(unionErrors=checkType(type[j],value)).length){
+							break;
+						}
+					}
+					if(unionErrors.length){
+						return unionErrors;
+					}
+				}else if(typeof type == &#x27;object&#x27;){
+					var priorErrors = errors;
+					errors = [];
+					checkProp(value,type,path);
+					var theseErrors = errors;
+					errors = priorErrors;
+					return theseErrors;
+				}
+			}
+			return [];
+		}
+		if(value === undefined){
+			if(schema.required){
+				addError(&#x22;is missing and it is required&#x22;);
+			}
+		}else{
+			errors = errors.concat(checkType(getType(schema),value));
+			if(schema.disallow &#x26;&#x26; !checkType(schema.disallow,value).length){
+				addError(&#x22; disallowed value was matched&#x22;);
+			}
+			if(value !== null){
+				if(value instanceof Array){
+					if(schema.items){
+						var itemsIsArray = schema.items instanceof Array;
+						var propDef = schema.items;
+						for (i = 0, l = value.length; i &#x3c; l; i += 1) {
+							if (itemsIsArray)
+								propDef = schema.items[i];
+							if (options.coerce)
+								value[i] = options.coerce(value[i], propDef);
+							errors.concat(checkProp(value[i],propDef,path,i));
+						}
+					}
+					if(schema.minItems &#x26;&#x26; value.length &#x3c; schema.minItems){
+						addError(&#x22;There must be a minimum of &#x22; + schema.minItems + &#x22; in the array&#x22;);
+					}
+					if(schema.maxItems &#x26;&#x26; value.length &#x3e; schema.maxItems){
+						addError(&#x22;There must be a maximum of &#x22; + schema.maxItems + &#x22; in the array&#x22;);
+					}
+				}else if(schema.properties || schema.additionalProperties){
+					errors.concat(checkObj(value, schema.properties, path, schema.additionalProperties));
+				}
+				if(schema.pattern &#x26;&#x26; typeof value == &#x27;string&#x27; &#x26;&#x26; !value.match(schema.pattern)){
+					addError(&#x22;does not match the regex pattern &#x22; + schema.pattern);
+				}
+				if(schema.maxLength &#x26;&#x26; typeof value == &#x27;string&#x27; &#x26;&#x26; value.length &#x3e; schema.maxLength){
+					addError(&#x22;may only be &#x22; + schema.maxLength + &#x22; characters long&#x22;);
+				}
+				if(schema.minLength &#x26;&#x26; typeof value == &#x27;string&#x27; &#x26;&#x26; value.length &#x3c; schema.minLength){
+					addError(&#x22;must be at least &#x22; + schema.minLength + &#x22; characters long&#x22;);
+				}
+				if(typeof schema.minimum !== undefined &#x26;&#x26; typeof value == typeof schema.minimum &#x26;&#x26;
+						schema.minimum &#x3e; value){
+					addErro ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.json-schema.validate.checkPropertyChange" id="apidoc.element.json-schema.validate.checkPropertyChange">
+        function <span class="apidocSignatureSpan">json-schema.validate.</span>checkPropertyChange
+        <span class="apidocSignatureSpan">(value, schema, property)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">checkPropertyChange = function (value, schema, property) {
+		// Summary:
+		// 		The checkPropertyChange method will check to see if an value can legally be in property with the given schema
+		// 		This is slightly different than the validate method in that it will fail if the schema is readonly and it will
+		// 		not check for self-validation, it is assumed that the passed in value is already internally valid.
+		// 		The checkPropertyChange method will return the same object type as validate, see JSONSchema.validate for
+		// 		information.
+		//
+		return validate(value, schema, {changing: property || &#x22;property&#x22;});
+	}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.json-schema.validate.mustBeValid" id="apidoc.element.json-schema.validate.mustBeValid">
+        function <span class="apidocSignatureSpan">json-schema.validate.</span>mustBeValid
+        <span class="apidocSignatureSpan">(result)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">mustBeValid = function (result){
+	//	summary:
+	//		This checks to ensure that the result is valid and will throw an appropriate error message if it is not
+	// result: the result returned from checkPropertyChange or validate
+	if(!result.valid){
+		throw new TypeError(result.errors.map(function(error){return &#x22;for property &#x22; + error.property + &#x27;: &#x27; + error.message;}).join(&#x22;,\n&#x22;));
+	}
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
 
 
 </div>
